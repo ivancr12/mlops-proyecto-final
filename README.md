@@ -32,3 +32,39 @@ Ivan Cespedes
 
 ## URL de la API desplegada
 Próximamente: https://tp7-mlops-api.onrender.com
+
+## 📊 Diagrama de Arquitectura
+
+```mermaid
+graph TB
+    subgraph "Desarrollador"
+        A[Git Push] --> B[GitHub]
+    end
+    
+    subgraph "CI/CD Pipeline"
+        B --> C[GitHub Actions]
+        C --> D[Tests]
+        C --> E[Entrenamiento]
+        C --> F[Deploy]
+    end
+    
+    subgraph "Almacenamiento"
+        E --> G[S3 Bucket]
+        G --> H[Modelos]
+        G --> I[Métricas]
+        G --> J[Datos]
+    end
+    
+    subgraph "Infraestructura"
+        F --> K[EC2]
+        K --> L[API FastAPI]
+        L --> M[/health]
+        L --> N[/predict]
+        L --> O[/train]
+    end
+    
+    subgraph "Reentrenamiento"
+        P[Cron diario] --> Q[GitHub Actions]
+        Q --> E
+    end
+
