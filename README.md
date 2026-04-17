@@ -25,7 +25,7 @@ API de Machine Learning para predicción de precios de viviendas con:
 **URL:** http://3.151.94.62:8000
 
 ## Diagrama de Arquitectura
-```mermaid
+` ` `mermaid
 graph TB
     A[Git Push] --> B[GitHub]
     B --> C[GitHub Actions]
@@ -34,13 +34,14 @@ graph TB
     E --> F[S3 Bucket]
     C --> G[EC2]
     G --> H[API FastAPI]
-Configuración Local
+` ` `
 
-Clonar repositorio
-Crear .env con credenciales AWS
-pip install -r requirements.txt
-python scripts/train.py
-uvicorn app.main:app --reload
-Autor
+## Configuración Local
+1. Clonar repositorio
+2. Crear archivo `.env` con credenciales AWS
+3. `pip install -r requirements.txt`
+4. `python scripts/train.py`
+5. `uvicorn app.main:app --reload`
 
+## Autor
 Ivan Cespedes
