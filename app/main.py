@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from datetime import datetime
 import os
 import sys
+from typing import List
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from app.model import HousingPriceModel
@@ -17,14 +18,14 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="MLOps Proyecto Final", description="API con S3, logging y DVC")
+app = FastAPI(title="Proyecto Final - MLOps", description="API de predicción de precios con CI/CD, EC2 y S3")
 
 # Variables globales
 model = HousingPriceModel()
 s3 = S3Utils()
 
 class PredictionRequest(BaseModel):
-    features: list[float]
+    features: List[float]
 
 @app.on_event("startup")
 async def startup_event():
@@ -43,7 +44,7 @@ async def startup_event():
 def root():
     logger.info("Root endpoint llamado")
     return {
-        "message": "MLOps Proyecto Final - API con S3",
+        "message": "Proyecto Final - MLOps",
         "status": "running",
         "endpoints": ["/health", "/predict", "/train"]
     }
@@ -58,7 +59,6 @@ def predict(request: PredictionRequest):
     try:
         logger.info(f"Predicción solicitada con features: {request.features}")
         
-        # Intentar cargar modelo si no está disponible
         if model.model is None:
             logger.info("Modelo no cargado, intentando cargar desde S3")
             if s3.download_file(Config.MODEL_PATH, 'models/model_tmp.pkl'):
