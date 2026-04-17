@@ -7,3 +7,4 @@ models/*.pkl
 *.log
 models/*.pkl
 data/*.csv
+*.pem
